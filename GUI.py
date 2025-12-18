@@ -1,7 +1,8 @@
 import tkinter as tk
-
+from front import clientPlayer
 class guiImage:
     def __init__(self):
+        self.client = clientPlayer()
         self.root = tk.Tk()
 
         self.root.title("My first Gui")
@@ -29,6 +30,7 @@ class guiImage:
     def get_value(self):
         self.user_name = self.ENT1.get()
         self.user_Number = self.ENT2.get()
+        self.client.send_to_backend({"email": self.user_name, "phone": self.user_Number})
 
         print("Email:", self.user_name)
         print("Phone:", self.user_Number)
