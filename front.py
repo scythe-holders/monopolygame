@@ -1,5 +1,6 @@
 import socket
 import threading
+import json
 
 class clientPlayer:
     def __init__(self):
@@ -24,11 +25,14 @@ class clientPlayer:
         thread = threading.Thread(target=self.receive_messages)
         thread.start()
     def send_to_backend(self, data):
-            try:
-               if isinstance(data, str):
-                  data = data.encode()
-               self.client.sendall(data)
-            except Exception as e:
-              print(f"Error sending data: {e}")
+        try:
+            if isinstance(data, dict):
+                data = json.dumps(data).encode("utf-8")
+            elif isinstance(data, str):
+                data = data.encode("utf-8")
+            self.client.sendall(data)
+
+        except Exception as e:
+            print(f"Error sending data: {e}")
 if __name__ == "__main__":
     s = clientPlayer()

@@ -14,17 +14,18 @@ class server:
         self.server.bind((self.HOST, self.PORT))
         self.server.listen()
         self.start()
-        # self.server.settimeout(120)
 
     def handle_client(self, conn):
         try:
-            while len(self.clients) < 4:
+            while True:
                 data = conn.recv(1024)
-                if not data:
-                    break
-            self.broadcast(data)
+                self.broadcast(data)
+                print(data)
         except:
             pass
+
+    def reasiving_massage():
+        print("x")
 
     def start(self):
         self.server.settimeout(1)
@@ -33,7 +34,10 @@ class server:
                 try:
                     conn, addr = self.server.accept()
                     if conn:
+                        self.PlayerNUM[f"conn number {0}".format(
+                            len(self.clients))] = conn
                         print("1 person connected")
+                        print(self.PlayerNUM)
                 except socket.timeout:
                     continue
                 t = threading.Thread(target=self.handle_client,
@@ -52,11 +56,11 @@ class server:
 
     def broadcast(self, message):
         """
-        Send `message` to all connected clients.
+        Send bytes `message` to all connected clients.
         """
         for client in self.clients:
             try:
-                client.sendall(message.encode())
+                client.sendall(message)
             except:
                 print("Error sending message to client.")
 
@@ -66,6 +70,7 @@ class server:
 
     def game(self):
         print("game started")
+
 if __name__ == "__main__":
     s = server()
     s.start()

@@ -1,5 +1,6 @@
 import tkinter as tk
 from front import clientPlayer
+
 class guiImage:
     def __init__(self):
         self.client = clientPlayer()
