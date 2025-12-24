@@ -6,5 +6,6 @@ class Player:
         self.tile_current = 0
         self.Properties_Owned = 0
         self.status = "active"
+        self.acionHistory=""
 
     
